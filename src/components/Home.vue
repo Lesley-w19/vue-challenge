@@ -1,8 +1,14 @@
 <template>
-  <div class="container">
+  <div class="container home-wrapper">
     <div class="row">
       <div class="col-lg-12">
         <h3>{{ msg }}</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
+          quisquam maxime voluptatem quidem consectetur et ipsam esse
+          accusantium illum a!
+        </p>
+        <button class="btn btn-color">Read blogs</button>
       </div>
     </div>
   </div>
@@ -20,7 +26,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
-  margin: 40px 0 0;
+  margin: 0 40px 0 0;
 }
 ul {
   list-style-type: none;
