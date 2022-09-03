@@ -1,0 +1,348 @@
+@use "image";
+@use "font";
+@use "color";
+
+$transition: all 0.4s ease-in-out;
+
+$background-navbar: rgba(255, 255, 255, 0.347);
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: (font.$fontMain);
+  background: (color.$background-color);
+  width: 100vw;
+}
+a {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+
+@mixin display($align, $justify) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+}
+.btn-color {
+  background-color: (color.$dark-blue);
+  padding: 10px 80px;
+  margin: 20px 0;
+}
+.wrapper {
+  width: 100%;
+  min-height: 10vh;
+  background: linear-gradient(
+      to bottom left,
+      rgba(5, 5, 5, 0.4),
+      rgba(0, 0, 0, 0.681)
+    ),
+    url(image.$imageHome) no-repeat bottom;
+  background-size: cover;
+  font-family: font.$fontMain;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.home-wrapper {
+  width: 100%;
+  min-height: 90vh;
+  background: linear-gradient(
+      to bottom left,
+      rgba(5, 5, 5, 0.4),
+      rgba(0, 0, 0, 0.681)
+    ),
+    url(image.$imageHome) no-repeat bottom;
+  background-size: cover;
+  font-family: font.$fontMain;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @include display(center, left);
+  padding: 10px 60px;
+  .row {
+    width: 80%;
+  }
+  h3 {
+    font-size: 50px;
+    color: (color.$light-blue);
+  }
+  p {
+    font-size: 20px;
+    width: 60%;
+    margin: 10px 0;
+    color: (color.$color-white);
+  }
+}
+.navbar {
+  @include display(center, space-between);
+  padding: 20px 30px;
+  background-color: #a6c5d78c;
+  border-bottom: 0.9px solid (color.$color-white);
+  color: (color.$color-white);
+  cursor: pointer;
+}
+.nav-links a {
+  color: (color.$color-white);
+}
+/* LOGO */
+.logo {
+  font-size: 32px;
+}
+/* NAVBAR MENU */
+.menu {
+  display: flex;
+  gap: 1em;
+  font-size: 18px;
+  li {
+    padding: 5px 14px;
+    &:hover {
+      background-color: (color.$dark-blue);
+      border-radius: 5px;
+      transition: 0.3s ease;
+    }
+  }
+  .btn {
+    background-color: (color.$dark-blue);
+    padding: 10px 25px;
+    border: none;
+    font-weight: bolder;
+    border-radius: 5px;
+    color: (color.$color-white);
+    cursor: pointer;
+    transition: $transition;
+    &:hover {
+      background-color: (color.$teal-blue) !important;
+    }
+  }
+}
+
+/* CHECKBOX HACK */
+input[type="checkbox"] {
+  display: none;
+}
+/*HAMBURGER MENU*/
+.hamburger {
+  display: none;
+  font-size: 24px;
+  user-select: none;
+}
+
+.blogs-container {
+  h1 {
+    padding: 40px 30px;
+  }
+}
+
+.band {
+  width: 90%;
+  max-width: 1240px;
+  margin: 0 auto;
+  z-index: -100 !important;
+  display: grid;
+
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  grid-gap: 20px;
+
+  @media (min-width: 30em) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: 60em) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card {
+  background: (color.$color-white);
+  text-decoration: none;
+  color: #444;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  // sets up hover state
+  position: relative;
+  top: 0;
+  transition: all 0.1s ease-in;
+
+  &:hover {
+    top: -2px;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  article {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin: 0;
+    color: #333;
+  }
+
+  p {
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 2em 0 0 0;
+  }
+
+  .thumb {
+    padding-bottom: 60%;
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+.item-1 {
+  @media (min-width: 60em) {
+    grid-column: 1 / span 2;
+
+    h1 {
+      font-size: 24px;
+    }
+  }
+}
+
+//login
+
+@mixin btn($fontcolor: #fafafa) {
+  font-family: (font.$fontMain);
+  font-size: 15px;
+  outline: 0;
+  border: 0;
+  width: 100%;
+  padding: 15px;
+  background: (color.$color-primary);
+  color: $fontcolor;
+  text-transform: uppercase;
+}
+
+@mixin message($fontcolor: #90a4ae) {
+  color: $fontcolor;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+}
+
+@mixin input($bkgnd: #f5f5f5) {
+  font-family: (font.$fontMain);
+
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  outline: 0;
+  font-size: 15px;
+  text-align: start;
+  box-sizing: border-box;
+  background: $bkgnd;
+}
+
+.form-container {
+  padding: 8% 0 0;
+  width: 365px;
+  margin: auto;
+  min-height: 100vh;
+  @include display(center, center);
+  .form {
+    position: relative;
+    z-index: 1;
+    max-width: 350px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    background: (color.$color-white);
+    input {
+      @include input;
+      ::placeholder {
+        color: #90a4ae;
+      }
+    }
+
+    .btn {
+      @include btn;
+    }
+
+    .message {
+      @include message;
+      margin-top: 20px;
+      a {
+        text-decoration: none;
+        color: (color.$teal-blue);
+      }
+    }
+
+    .btn-sign {
+      background-color: (color.$dark-blue);
+    }
+  }
+}
+/* APPLYING MEDIA QUERIES */
+@media (max-width: 768px) {
+  //home
+  .home-wrapper {
+    width: 100%;
+    .row {
+      width: 100%;
+    }
+    p {
+      width: 80%;
+    }
+  }
+  .navbar {
+    width: 100vw;
+  }
+  //blogs
+  .blogs-container {
+    .band {
+      z-index: -200;
+    }
+  }
+  .menu {
+    margin-top: 24px;
+    display: none;
+    position: absolute;
+    background-color: (color.$light-blue);
+
+    right: 0;
+    left: 0;
+    text-align: center;
+    padding: 20px;
+    .btn {
+      margin: 10px auto;
+    }
+  }
+
+  .menu li:hover {
+    display: inline-block;
+    background-color: (color.$dark-blue);
+
+    transition: $transition;
+  }
+  .menu li + li {
+    margin-top: 12px;
+  }
+  input[type="checkbox"]:checked ~ .menu {
+    display: block;
+  }
+  .hamburger {
+    display: block;
+    cursor: pointer;
+  }
+}
