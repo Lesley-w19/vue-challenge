@@ -1,80 +1,164 @@
 <template>
   <div class="blogs-container">
-<h1>Our Blogs</h1>
- 
-<div class="band">
-  <div class="item-1">
-    <a href="https://design.tutsplus.com/articles/international-artist-feature-malaysia--cms-26852" class="card">
-      <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/flex-1.jpg);"></div>
-      <article>
-        <h1>International Artist Feature: Malaysia</h1>
-        <span>Mary Winkler</span>
-      </article>
-    </a>
-  </div>
-  <div class="item-2">
-    <a href="https://webdesign.tutsplus.com/articles/how-to-conduct-remote-usability-testing--cms-27045" class="card">
-      <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/users-2.png);"></div>
-      <article>
-        <h1>How to Conduct Remote Usability Testing</h1>
-        <span>Harry Brignull</span>
-      </article>
-    </a>
-  </div>
-  <div class="item-3">
-    <a href="https://design.tutsplus.com/articles/envato-tuts-community-challenge-created-by-you-july-edition--cms-26724" class="card">
-      <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/flex-5.jpg);"></div>
-      <article>
-        <h1>Created by You, July Edition</h1>
-        <p>Welcome to our monthly feature of fantastic tutorial results created by you, the Envato Tuts+ community! </p>
-        <span>Melody Nieves</span>
-      </article>
-    </a>
-  </div>
-  <div class="item-4">
-    <a href="https://webdesign.tutsplus.com/tutorials/how-to-code-a-scrolling-alien-lander-website--cms-26826" class="card">
-      <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/landing.png);"></div>
-      <article>
-        <h1>How to Code a Scrolling “Alien Lander” Website</h1>
-        <p>We’ll be putting things together so that as you scroll down from the top of the page you’ll see an “Alien Lander” making its way to touch down.</p>
-        <span>Kezz Bracey</span>
-      </article>
-    </a>
-  </div>
-  <div class="item-5">
-    <a href="https://design.tutsplus.com/tutorials/stranger-things-inspired-text-effect--cms-27139" class="card">
-      <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/strange.jpg);"></div>
-      <article>
-        <h1>How to Create a “Stranger Things” Text Effect in Adobe Photoshop</h1>
-        <span>Rose</span>
-      </article>
-    </a>
-  </div>
-  <div class="item-6">
-    <a href="https://photography.tutsplus.com/articles/5-inspirational-business-portraits-and-how-to-make-your-own--cms-27338" class="card">
-      <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/flor.jpg);"></div>
-      <article>
-        <h1>5 Inspirational Business Portraits and How to Make Your Own</h1>
+    <router-link to="/blogs"><h3>&larr; Back to blogs</h3></router-link>
 
-        <span>Marie Gardiner</span>
-      </article>
-    </a>
-  </div>
-  <div class="item-7">
-    <a href="https://webdesign.tutsplus.com/articles/notes-from-behind-the-firewall-the-state-of-web-design-in-china--cms-22281" class="card">
-      <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/china.png);"></div>
-      <article>
-        <h1>Notes From Behind the Firewall: The State of Web Design in China</h1>
-        <span>Kendra Schaefer</span>
-      </article>
-    </a>
-  </div>
-</div>
+    <div class="card">
+      <img :src="blog.image" class="card__image" alt="brown couch" />
+      <div class="card__content">
+        <time datetime="2021-03-30" class="card__date">{{
+          blog.created_at
+        }}</time>
+        <h2 class="card__title">{{ blog.title }}</h2>
+        <p>{{ blog.description }}</p>
+        <h5>by {{ blog.author }}</h5>
+        <div>
+          <h6>{{ message }}</h6>
+        </div>
+        <div class="btns">
+          <button class="btn btn-u" @click="singleBlogUpdate(blog.id)">
+            edit
+          </button>
+          <button class="btn btn-d" @click="delBlog(blog.id)">Delete</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+import router from "@/router";
 export default {
-  name: "BlogCards",
+  name: "SingleBlog",
+  data() {
+    return {
+      blog_id: this.$route.params.id,
+      message: "",
+    };
+  },
+  methods: {
+    ...mapActions(["getBlog", "deleteBlog"]),
+    singleBlogUpdate(blog_id) {
+      router.push({ name: "updateblog", params: { id: blog_id } });
+    },
+    delBlog(id) {
+      this.deleteBlog(id);
+      this.message = `Blog id ${id} is deleted...`;
+
+      setTimeout(() => {
+        router.push({ name: "blogs" });
+      }, 2000);
+    },
+  },
+  computed: mapGetters(["blog"]),
+  created() {
+    this.getBlog(this.blog_id);
+  },
 };
 </script>
+
+<style scoped lang="scss">
+.blogs-container {
+  padding: 20px 40px;
+  h3 {
+    text-align: start;
+    margin-left: 40px;
+    color: #0868a5;
+    text-decoration: underline;
+  }
+}
+@mixin mediaBig {
+  @media (min-width: 576px) {
+    @content;
+  }
+}
+
+@include mediaBig {
+  :root {
+    --font-size-title: 40px;
+  }
+}
+
+.card {
+  max-width: 960px;
+  border-radius: 5px;
+  margin: 20px auto;
+  margin-top: 0;
+
+  @include mediaBig {
+    flex-direction: row;
+    align-items: center;
+    margin: 40px;
+    padding: 32px;
+  }
+
+  .card__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 18px;
+
+    @include mediaBig {
+      width: 45%;
+      max-height: none;
+      min-height: 400px;
+      margin-bottom: 0;
+    }
+  }
+
+  .card__content {
+    padding: 10px 20px;
+
+    @include mediaBig {
+      width: 55%;
+      padding-left: 40px;
+    }
+  }
+
+  .card__date {
+    display: block;
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-bottom: 10px;
+
+    @include mediaBig {
+      margin-bottom: 20px;
+      font-weight: lighter;
+      letter-spacing: 1px;
+      text-align: right;
+    }
+  }
+
+  .card__title {
+    margin: 30px auto;
+    font-size: 30px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+  }
+
+  p,
+  h6 {
+    margin: 10px 0;
+    letter-spacing: 1px;
+  }
+  .btns {
+    width: 100%;
+    padding: 10px 0;
+    button {
+      padding: 10px 30px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      text-transform: uppercase;
+      margin: 1px 10px 0 0;
+      cursor: pointer;
+    }
+    .btn-d {
+      background-color: #ff2600;
+    }
+    .btn-u {
+      background-color: #0868a5;
+    }
+  }
+}
+</style>
