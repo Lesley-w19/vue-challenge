@@ -51,17 +51,17 @@ Blog.getAll = (title, result) => {
     result(null, res);
   });
 };
-Blog.getAllPublished = (result) => {
-  sql.query("SELECT * FROM blogs WHERE published=true", (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(null, err);
-      return;
-    }
-    console.log("blogs: ", res);
-    result(null, res);
-  });
-};
+// Blog.getAllPublished = (result) => {
+//   sql.query("SELECT * FROM blogs WHERE published=true", (err, res) => {
+//     if (err) {
+//       console.log("error: ", err);
+//       result(null, err);
+//       return;
+//     }
+//     console.log("blogs: ", res);
+//     result(null, res);
+//   });
+// };
 Blog.updateById = (id, blog, result) => {
   sql.query(
     "UPDATE blogs SET title = ?, description = ?, published = ? WHERE id = ?",
@@ -100,15 +100,15 @@ Blog.remove = (id, result) => {
 };
 
 
-Blog.removeAll = (result) => {
-  sql.query("DELETE FROM blogs", (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(null, err);
-      return;
-    }
-    console.log(`deleted ${res.affectedRows} blogs`);
-    result(null, res);
-  });
-};
+// Blog.removeAll = (result) => {
+//   sql.query("DELETE FROM blogs", (err, res) => {
+//     if (err) {
+//       console.log("error: ", err);
+//       result(null, err);
+//       return;
+//     }
+//     console.log(`deleted ${res.affectedRows} blogs`);
+//     result(null, res);
+//   });
+// };
 module.exports = Blog;

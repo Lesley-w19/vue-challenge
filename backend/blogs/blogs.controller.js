@@ -9,10 +9,10 @@ exports.create = (req, res) => {
     }
     // Create a Blog
     const blog = new Blog({
-      title: req.body.title,
-      description: req.body.description,
-      image: req.body.image,
-      author: req.body.author,
+      title: req.body.title.trim(),
+      description: req.body.description.trim(),
+      image: req.body.image.trim(),
+      author: req.body.author.trim(),
       published: req.body.published || false
     });
     // Save Blog in the database
@@ -48,16 +48,16 @@ exports.findOne = (req, res) => {
 
 
 // find all published blogs
-exports.findAllPublished = (req, res) => {
-    Blog.getAllPublished((err, data) => {
-      if (err)
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving blogs."
-        });
-      else res.send(data);
-    });
-  };
+// exports.findAllPublished = (req, res) => {
+//     Blog.getAllPublished((err, data) => {
+//       if (err)
+//         res.status(500).send({
+//           message:
+//             err.message || "Some error occurred while retrieving blogs."
+//         });
+//       else res.send(data);
+//     });
+//   };
 
 
 // Retrieve all blogs from the database (with condition).
@@ -123,13 +123,13 @@ exports.delete = (req, res) => {
 
 
 // Delete all blogs from the database.
-exports.deleteAll = (req, res) => {
-    Blog.removeAll((err, data) => {
-      if (err)
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while removing all blogs."
-        });
-      else res.send({ message: `All blogs were deleted successfully!` });
-    });
-  };
+// exports.deleteAll = (req, res) => {
+//     Blog.removeAll((err, data) => {
+//       if (err)
+//         res.status(500).send({
+//           message:
+//             err.message || "Some error occurred while removing all blogs."
+//         });
+//       else res.send({ message: `All blogs were deleted successfully!` });
+//     });
+//   };
