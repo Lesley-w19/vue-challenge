@@ -8,7 +8,9 @@
           quisquam maxime voluptatem quidem consectetur et ipsam esse
           accusantium illum a!
         </p>
-        <button class="btn btn-color">Read blogs</button>
+        <button class="btn">
+          <router-link to="/blogs"> Read blogs </router-link>
+        </button>
       </div>
     </div>
   </div>
@@ -24,19 +26,18 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 0 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style scoped lang="scss">
+.btn {
+    padding: 10px 50px;
+    margin: 20px auto;
+    background-color: #158fbf;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    a{
+color: #fff;
+text-transform: uppercase;
+letter-spacing: 1px;
+    }
+    }
 </style>
