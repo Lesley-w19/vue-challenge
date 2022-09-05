@@ -1,8 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import PageNotFound from "../views/PageNotFound.vue";
 import LoginPage from "../components/Login.vue";
 import SignupPage from "../components/SignUp.vue";
+import CreateBlog from "../components/CreateBlog.vue";
+import Blogs from "../components/Blogs.vue";
+import SingleBlog from "../components/Blog.vue";
+import UpdateBlog from "../components/UpdateBlog.vue";
 
 Vue.use(VueRouter);
 
@@ -22,15 +27,31 @@ const routes = [
     name: "signup",
     component: SignupPage,
   },
+  {
+    path: "/createblog",
+    name: "createblog",
+    component: CreateBlog,
+  },
+  {
+    path: "/updateblog/:id",
+    name: "updateblog",
+    component:UpdateBlog,
+  },
 
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/blogs",
+    name: "blogs",
+    component: Blogs,
+  },
+  {
+    path: "/blogs/:id",
+    name: "blog",
+    component: SingleBlog,
+  },
+  {
+    path: "/:catchAll(.*)*",
+    name: "PageNotFound",
+    component: PageNotFound,
   },
 ];
 
