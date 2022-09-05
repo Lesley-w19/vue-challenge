@@ -10,9 +10,11 @@
       <!-- NAVIGATION MENUS -->
       <div class="menu">
         <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/about">About</router-link></li>
+        <li><router-link to="/blogs">About</router-link></li>
         <div>
-          <button class="btn">Create Blog</button>
+          <button class="btn">
+            <router-link to="/createblog"> Create Blog</router-link>
+          </button>
         </div>
       </div>
     </ul>
