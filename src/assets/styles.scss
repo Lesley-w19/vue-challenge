@@ -250,12 +250,18 @@ input[type="checkbox"] {
   background: $bkgnd;
 }
 
-.form-container {
+
+  .form-container {
   padding: 5% 0 0;
   width: 500px;
   margin: auto;
   min-height: 100vh;
   @include display(center, center);
+  flex-direction: column;
+  .back{
+    margin: 20px 30px ;
+  
+  }
   .form {
     position: relative;
     z-index: 1;
@@ -301,6 +307,8 @@ input[type="checkbox"] {
     }
   }
 }
+
+
 /* APPLYING MEDIA QUERIES */
 @media (max-width: 768px) {
   //home
