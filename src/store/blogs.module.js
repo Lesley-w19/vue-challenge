@@ -2,6 +2,7 @@ import axios from "axios";
 const state = {
   blogs: [],
   blog: {},
+  error: "",
 };
 const getters = {
   blogsList: (state) => state.blogs,
@@ -24,12 +25,17 @@ const actions = {
     const response = await axios.post("http://localhost:3000/blogs", blog);
     commit("addBlog", response.data);
   },
-  async updateBlog({ commit }, id, blog) {
-    const response = await axios.post(
-      `http://localhost:3000/blogs/${id}`,
-      blog
-    );
-    commit("updateBlog", response.data);
+  async updateBlog({ commit }, payload) {
+    console.log(payload);
+    await axios
+      .put(`http://localhost:3000/blogs/${payload.id}`, payload.form)
+      .then((response) => {
+        console.log(response);
+        commit("updateBlog", response.data, response.data.message);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   async deleteBlog({ commit }, id) {
     await axios.delete(`http://localhost:3000/blogs/${id}`);
@@ -40,12 +46,12 @@ const mutations = {
   setBlogs: (state, blogs) => (state.blogs = blogs),
   setBlog: (state, blog) => (state.blog = blog),
   addBlog: (state, blog) => state.blogs.unshift(blog),
-  updateBlog: (state, blog) => state.blogs.unshift(blog),
+  updateBlog: (state, blog, message) => {
+    state.blogs.unshift(blog);
+    state.error = message;
+  },
   searchBlogs: (state, blogs) => (state.blogs = blogs),
-  deleteBlog: (state, id) => (
-    state.blogs.filter((blog) => blog.id !== id),
-    state.blogs.splice((blog) => blog.id, 1)
-  ),
+  deleteBlog: (state, id) => state.blogs.filter((blog) => blog.id !== id),
 };
 export default {
   state,
