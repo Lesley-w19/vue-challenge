@@ -1,5 +1,6 @@
 <template>
   <div class="form-container">
+    <router-link to="/"><h3>&larr; Back to Home</h3></router-link>
     <div class="form">
       <form class="register-form" @submit.prevent="onBlogSubmit">
         <input
