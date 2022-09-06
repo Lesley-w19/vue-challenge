@@ -12,7 +12,7 @@
         <p>{{ blog.description }}</p>
         <h5>by {{ blog.author }}</h5>
         <div>
-          <h6>{{ message }}</h6>
+          <p class="message">{{ message }}</p>
         </div>
         <div class="btns">
           <button class="btn btn-u" @click="singleBlogUpdate(blog.id)">
@@ -43,7 +43,7 @@ export default {
     },
     delBlog(id) {
       this.deleteBlog(id);
-      this.message = `Blog id ${id} is deleted...`;
+      this.message = `Blog is deleted successfully!!...`;
 
       setTimeout(() => {
         router.push({ name: "blogs" });
@@ -73,11 +73,7 @@ export default {
   }
 }
 
-@include mediaBig {
-  :root {
-    --font-size-title: 40px;
-  }
-}
+
 
 .card {
   max-width: 960px;
@@ -160,5 +156,11 @@ export default {
       background-color: #0868a5;
     }
   }
+}
+.message {
+  padding: 20px auto;
+  margin: 10px auto;
+  text-align: center;
+  color: #0868a5;
 }
 </style>
