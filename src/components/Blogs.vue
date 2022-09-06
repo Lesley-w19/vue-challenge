@@ -3,7 +3,7 @@
     <Navbar />
 
     <h1>Our Blogs</h1>
-    <form class="search-form" @submit.prevent="filteredList()">
+    <form class="search-form" @submit.prevent="filteredList">
       <input
         type="text"
         name="search"
@@ -29,6 +29,41 @@
       </div>
     </div>
     <!-- <router-view></router-view> -->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            v-if="page != 1"
+            @click="page--"
+          >
+            Previous
+          </button>
+        </li>
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            v-for="pageNumber in pages.slice(page - 1, page + 2)"
+            :key="pageNumber"
+            @click="page = pageNumber"
+          >
+            {{ pageNumber }}
+          </button>
+        </li>
+        <li class="page-item">
+          <button
+            type="button"
+            @click="page++"
+            v-if="page < pages.length"
+            class="page-link"
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
@@ -44,7 +79,10 @@ export default {
       search: "",
       // blog_query: this.searchByTitle,
       isBlogs: true,
-      searchBlogs: [],
+      allBlogs: [],
+      page: 1,
+      perPage: 4,
+      pages: [],
     };
   },
 
@@ -53,39 +91,56 @@ export default {
     singleBlog(blog_id) {
       router.push({ name: "blog", params: { id: blog_id } });
     },
-    // searchResult() {
-    //   const title = this.$route.query;
-    //   console.log(title);
-    //   // this.searchBlogs(title);
-    //   // return this.blogsList;
-    // },
-    // filteredArray() {
-    //   const compare = (a, b) => {
-    //     if (a.name < b.name) return -1;
-    //     if (a.name > b.name) return 1;
-    //     return 0;
-    //   };
-
-    //   return this.searchBlogs
-    //     .filter((blg) => {
-    //       return blg.title.toLowerCase().includes(this.search.toLowerCase());
-    //     })
-    //     .sort(compare);
-    // },
     filteredList() {
-      return this.searchBlogs.filter(bl => {
-        return bl.title.toLowerCase().includes(this.search.toLowerCase())
-      })
-    }
+      // this.allBlogs = this.search ? this.searchBlogs : this.blogsList;
+    },
+    setPages() {
+      let numberOfPages = Math.ceil(this.allBlogs.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate(allBlogs) {
+      let page = this.page;
+      let perPage = this.perPage;
+      let from = page * perPage - perPage;
+      let to = page * perPage;
+      return allBlogs.slice(from, to);
+    },
   },
   components: {
     Navbar,
   },
-  computed: mapGetters(["blogsList"]),
-  created() {
+  watch: {
+    blogsList() {
+      this.setPages();
+    },
+  },
+  computed: {
+    ...mapGetters(["blogsList"]),
+    displayedBlogs() {
+      return this.paginate(this.allBlogs);
+    },
+    searchBlogs() {
+      if (this.search) {
+        return this.displayedBlogs.filter((bl) =>
+          bl.title.toLowerCase().includes(this.search.toLowerCase())
+        );
+      } else {
+        return this.displayedBlogs;
+      }
+    },
+  },
+  mounted() {
     this.getBlogs();
-    this.searchBlogs = this.blogsList
+    this.allBlogs = this.blogsList;
     // console.log(this.blogsList);
+  },
+
+  filters: {
+    trimWords(value) {
+      return value.split(" ").splice(0, 20).join(" ") + "...";
+    },
   },
 };
 </script>
@@ -114,6 +169,30 @@ export default {
     cursor: pointer;
 
     background-color: #0868a5;
+  }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 10px auto;
+  button {
+    padding: 10px 20px;
+    margin: 30px 3px;
+    background-color: #0868a5;
+    color: #fff;
+    border: none;
+    border-radius: 2px;
+    letter-spacing: 1px;
+
+    .page-link {
+      display: inline-block;
+      font-size: 20px;
+      color: #29b3ed;
+      font-weight: 500;
+    }
   }
 }
 </style>
