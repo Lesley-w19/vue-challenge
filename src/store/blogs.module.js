@@ -26,12 +26,13 @@ const actions = {
     commit("addBlog", response.data);
   },
   async updateBlog({ commit }, payload) {
-    console.log(payload);
+    // console.log(payload);
     await axios
       .put(`http://localhost:3000/blogs/${payload.id}`, payload.form)
       .then((response) => {
         console.log(response);
-        commit("updateBlog", response.data, response.data.message);
+        commit("updateBlog", response.data, payload.id, response.data.message);
+        // alert("updated successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -43,15 +44,24 @@ const actions = {
   },
 };
 const mutations = {
-  setBlogs: (state, blogs) => (state.blogs = blogs),
+  setBlogs: (state, blogs) => {
+    // console.log(blogs);
+    state.blogs = blogs;
+    console.log(state.blogs);
+  },
   setBlog: (state, blog) => (state.blog = blog),
   addBlog: (state, blog) => state.blogs.unshift(blog),
-  updateBlog: (state, blog, message) => {
+  updateBlog: (state, blog, id, message) => {
+    //FILTER BY ID  THEN
+    state.blogs.filter((blog) => blog.id !== id);
     state.blogs.unshift(blog);
     state.error = message;
   },
   searchBlogs: (state, blogs) => (state.blogs = blogs),
-  deleteBlog: (state, id) => state.blogs.filter((blog) => blog.id !== id),
+  deleteBlog: (state, id) => {
+    let blgs = state.blogs.filter((blog) => blog.id !== id);
+    state.blogs = blgs;
+  },
 };
 export default {
   state,
