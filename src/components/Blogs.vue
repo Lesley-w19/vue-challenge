@@ -112,7 +112,11 @@ export default {
     Navbar,
   },
   watch: {
+    // this.allBlogs = this.blogsList
+
     blogsList() {
+      this.allBlogs = this.blogsList;
+
       this.setPages();
     },
   },
@@ -133,8 +137,8 @@ export default {
   },
   mounted() {
     this.getBlogs();
-    this.allBlogs = this.blogsList;
     // console.log(this.blogsList);
+    console.log("anything!.");
   },
 
   filters: {
