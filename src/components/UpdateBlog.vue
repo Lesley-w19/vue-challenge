@@ -81,7 +81,7 @@ export default {
         form: this.form,
       };
       this.updateBlog(blog_data);
-      console.log(this.form);
+      // console.log(this.form);
         this.message = "Blog updated successfully...";
         setTimeout(() => {
           this.$router.push({ name: "blogs" });
